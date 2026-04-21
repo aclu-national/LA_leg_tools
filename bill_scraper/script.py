@@ -2,6 +2,7 @@
 import urllib.request, fitz, re
 import pandas as pd
 import json
+import os
 
 # Stripping unnecessary words
 STRIP_PATTERNS = [
@@ -113,27 +114,10 @@ def parse_bill(url):
 
     return segments
 
-# # Parsing a bill
-bill = parse_bill("https://legis.la.gov/legis/ViewDocument.aspx?d=1448258")
-# 
-# # Printing all segments
-for segment in bill:
-  print(f"[{segment['tag'].upper()}] {segment['text']}")
-# 
-# # Filtering to added/removed/present
-# removed = [s["text"] for s in bill if s["tag"] == "added"]
-# 
-
 # --------------------------- Looping Through Texts ----------------------------
 
 df = pd.read_csv("documents_text.csv")
 urls = df[df.document_desc == "Introduced"].document_url
-
-
-
-
-
-
 
 all_bills = {}
 
@@ -154,9 +138,7 @@ for i, url in enumerate(urls):
 with open("all_bills.json", "w") as f:
     json.dump(all_bills, f)
   
-
 # ------------------------- Reading in Data ------------------------------------
-import os
 
 os.makedirs("bill_texts", exist_ok=True)
 
