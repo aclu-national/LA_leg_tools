@@ -9,7 +9,7 @@ library(curl)
 fiscal_df <- read_csv("documents.csv") %>%
   filter(document_desc == "Fiscal Note")
 
-# Defining fiscal note urls
+# Defining fiscal note URLs
 fiscal_notes <- fiscal_df$state_link[1:10]
 
 # Variables
@@ -56,7 +56,7 @@ for (i in seq_along(fiscal_notes)) {
     
     # Convert to dataframes
     expenditures <- parse_section(exp_text)
-    revenues     <- parse_section(rev_text)
+    revenues <- parse_section(rev_text)
     
     print(expenditures)
     print(revenues)
@@ -68,5 +68,3 @@ for (i in seq_along(fiscal_notes)) {
     message(sprintf("  ERROR on URL %d (%s): %s", i, url, conditionMessage(e)))
   })
 }
-
-message("Done. Processed ", length(all_results), " of ", length(fiscal_notes), " URLs successfully.")
